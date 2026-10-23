@@ -1,11 +1,14 @@
-// 作答頁：一次一題，作答後自動前往下一題，完成後前往結果頁
+// 作答頁：每階段 10 題、共 6 階段；作答後自動捲到下一題，完成後前往結果頁
 'use strict';
 
 (async () => {
   const app = document.getElementById('app');
   const { el } = MBTI;
   const params = new URLSearchParams(location.search);
-  const AUTO_ADVANCE_MS = 280;
+  const PAGE_SIZE = 10;
+  const SCROLL_DELAY_MS = 250;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scrollBehavior = reduceMotion ? 'auto' : 'smooth';
 
   let data;
   try {
@@ -17,100 +20,148 @@
 
   const questions = data.questions;
   const total = questions.length;
-  if (params.get('new') === '1') MBTI.progress.clear();
+  const pageCount = Math.ceil(total / PAGE_SIZE);
+  if (params.get('new') === '1') {
+    MBTI.progress.clear();
+    // 移除網址參數，避免重新整理頁面時再次清除作答進度
+    history.replaceState(null, '', location.pathname);
+  }
   const saved = MBTI.progress.load();
   const answers = saved ? saved.answers : {};
-  let index = saved ? Math.min(Math.max(saved.index | 0, 0), total - 1) : 0;
-  let advanceTimer = null;
+  // 相容舊版進度格式（一次一題時記錄的是題目索引 index）
+  const savedPage = saved ? (Number.isInteger(saved.page) ? saved.page : Math.floor((saved.index | 0) / PAGE_SIZE)) : 0;
+  let page = Math.min(Math.max(savedPage, 0), pageCount - 1);
+  let scrollTimer = null;
 
+  // 每次渲染後更新的元素參照
+  let progressBar, progressBarFill, doneText, stageNote;
+
+  const pageQuestions = (p) => questions.slice(p * PAGE_SIZE, (p + 1) * PAGE_SIZE);
   const answeredCount = () => questions.filter((q) => answers[q.id]).length;
-  const firstUnanswered = () => questions.findIndex((q) => !answers[q.id]);
+  const firstUnansweredPage = () => {
+    const i = questions.findIndex((q) => !answers[q.id]);
+    return i === -1 ? -1 : Math.floor(i / PAGE_SIZE);
+  };
 
   function persist() {
-    MBTI.progress.save({ version: data.version, index, answers });
+    MBTI.progress.save({ version: data.version, page, answers });
   }
 
-  function render(focus) {
-    const q = questions[index];
+  function updateProgress() {
     const done = answeredCount();
-    const isLast = index === total - 1;
+    doneText.textContent = `已完成 ${done} / ${total} 題`;
+    progressBar.setAttribute('aria-valuenow', String(done));
+    progressBarFill.style.width = `${(done / total) * 100}%`;
+    const left = pageQuestions(page).filter((q) => !answers[q.id]).length;
+    stageNote.textContent = left ? `本階段還有 ${left} 題未作答` : '';
+  }
 
-    const scale = el('div', { class: 'scale' },
-      data.scale.map((opt) => {
-        const input = el('input', { type: 'radio', name: `q${q.id}`, value: String(opt.value) });
-        if (answers[q.id] === opt.value) input.checked = true;
-        input.addEventListener('change', () => choose(opt.value));
-        return el('label', {}, [input, el('span', {}, [el('span', { class: 'num', text: String(opt.value) }), opt.label])]);
-      })
-    );
+  function questionCard(q) {
+    const name = `q${q.id}`;
+    const options = data.scale.map((opt) => {
+      const input = el('input', { type: 'radio', name, value: String(opt.value) });
+      if (answers[q.id] === opt.value) input.checked = true;
+      input.addEventListener('change', () => choose(q, opt.value));
+      return el('label', {}, [
+        input,
+        el('span', { class: 'dot', 'aria-hidden': 'true', text: String(opt.value) }),
+        el('span', { class: 'visually-hidden', text: `${opt.value} ${opt.label}` }),
+      ]);
+    });
+    const first = data.scale[0].label;
+    const last = data.scale[data.scale.length - 1].label;
+    return el('section', { class: 'card q-item', id: `q-${q.id}` }, [
+      el('fieldset', {}, [
+        el('legend', {}, [el('span', { class: 'q-num', text: `${q.id}.` }), q.text]),
+        el('div', { class: 'likert' }, options),
+        el('div', { class: 'likert-anchors', 'aria-hidden': 'true' }, [el('span', { text: first }), el('span', { text: last })]),
+      ]),
+      el('p', { class: 'q-missing-note', text: '請作答此題' }),
+    ]);
+  }
 
-    const prev = el('button', { class: 'btn btn-outline', type: 'button', text: '上一題' });
-    prev.disabled = index === 0;
-    prev.addEventListener('click', () => go(index - 1));
+  function render() {
+    const isLast = page === pageCount - 1;
+    const stageTitle = el('div', { class: 'stage-title', tabindex: '-1', text: `第 ${page + 1} / ${pageCount} 階段` });
+    doneText = el('span');
+    progressBarFill = el('div', { class: 'progress-bar' });
+    progressBar = el('div', {
+      class: 'progress', role: 'progressbar', 'aria-label': '作答進度',
+      'aria-valuemin': '0', 'aria-valuemax': String(total),
+    }, [progressBarFill]);
+    stageNote = el('p', { class: 'stage-note', role: 'status', 'aria-live': 'polite' });
 
-    const next = el('button', { class: 'btn', type: 'button', text: isLast ? '查看結果' : '下一題' });
-    next.disabled = isLast ? done < total : !answers[q.id];
-    next.addEventListener('click', () => (isLast ? finish() : go(index + 1)));
+    const prev = el('button', { class: 'btn btn-outline', type: 'button', text: '上一階段' });
+    prev.disabled = page === 0;
+    prev.addEventListener('click', () => goPage(page - 1));
+    const next = el('button', { class: 'btn', type: 'button', text: isLast ? '查看結果' : '下一階段' });
+    next.addEventListener('click', () => (isLast ? finish() : nextPage()));
 
-    const heading = el('div', { tabindex: '-1', class: 'question-focus' });
     app.replaceChildren(...[
       el('div', { class: 'progress-wrap' }, [
-        el('div', { class: 'progress-meta' }, [
-          el('span', { text: `第 ${index + 1} / ${total} 題` }),
-          el('span', { text: `已完成 ${done} 題` }),
-        ]),
-        el('div', {
-          class: 'progress', role: 'progressbar', 'aria-label': '作答進度',
-          'aria-valuemin': '0', 'aria-valuemax': String(total), 'aria-valuenow': String(done),
-        }, [el('div', { class: 'progress-bar', style: `width:${(done / total) * 100}%` })]),
+        el('div', { class: 'progress-meta' }, [stageTitle, doneText]),
+        progressBar,
       ]),
-      el('section', { class: 'card question' }, [
-        heading,
-        el('fieldset', {}, [el('legend', { text: q.text }), scale]),
-      ]),
+      page === 0 ? el('p', { class: 'small muted', text: data.instructions }) : null,
+      ...pageQuestions(page).map(questionCard),
       el('div', { class: 'quiz-nav' }, [prev, next]),
-      isLast && done < total
-        ? el('p', { class: 'small muted center' }, [`還有 ${total - done} 題未作答，`, unansweredLink()])
-        : null,
-      index === 0 ? el('p', { class: 'small muted center', text: data.instructions }) : null,
-      el('p', { class: 'small muted center kbd-hint', text: '提示：可用鍵盤數字鍵 1～5 作答，← 鍵回上一題。' }),
+      stageNote,
     ].filter(Boolean));
-    if (focus) heading.focus({ preventScroll: true });
+    updateProgress();
+    return stageTitle;
   }
 
-  function unansweredLink() {
-    const btn = el('button', { class: 'btn-text', type: 'button', text: '前往未作答的題目' });
-    btn.addEventListener('click', () => go(firstUnanswered()));
-    return btn;
-  }
-
-  function go(i) {
-    clearTimeout(advanceTimer);
-    if (i < 0 || i >= total) return;
-    index = i;
+  function goPage(p) {
+    clearTimeout(scrollTimer);
+    if (p < 0 || p >= pageCount) return;
+    page = p;
     persist();
-    render(true);
+    const title = render();
     window.scrollTo({ top: 0 });
+    title.focus({ preventScroll: true });
   }
 
-  function choose(value) {
-    const q = questions[index];
+  function choose(q, value) {
     answers[q.id] = value;
     persist();
-    clearTimeout(advanceTimer);
-    if (index < total - 1) {
-      render(false);
-      const from = index;
-      advanceTimer = setTimeout(() => { if (index === from) go(index + 1); }, AUTO_ADVANCE_MS);
-    } else {
-      render(false);
+    document.getElementById(`q-${q.id}`).classList.remove('missing');
+    updateProgress();
+
+    // 自動捲到下一題（僅當下一題尚未作答，避免修改答案時畫面亂跳）
+    clearTimeout(scrollTimer);
+    const list = pageQuestions(page);
+    const nextQ = list[list.indexOf(q) + 1];
+    const target = nextQ
+      ? (!answers[nextQ.id] ? document.getElementById(`q-${nextQ.id}`) : null)
+      : app.querySelector('.quiz-nav');
+    if (target) {
+      scrollTimer = setTimeout(() => target.scrollIntoView({ behavior: scrollBehavior, block: nextQ ? 'center' : 'end' }), SCROLL_DELAY_MS);
     }
   }
 
+  // 檢查本階段是否全部作答；未完成時標示並捲到第一個未作答題目
+  function checkPage() {
+    const missing = pageQuestions(page).filter((q) => !answers[q.id]);
+    missing.forEach((q) => document.getElementById(`q-${q.id}`).classList.add('missing'));
+    if (missing.length) {
+      const card = document.getElementById(`q-${missing[0].id}`);
+      card.scrollIntoView({ behavior: scrollBehavior, block: 'center' });
+      card.querySelector('input').focus({ preventScroll: true });
+      return false;
+    }
+    return true;
+  }
+
+  function nextPage() {
+    if (checkPage()) goPage(page + 1);
+  }
+
   function finish() {
-    const missing = firstUnanswered();
-    if (missing !== -1) {
-      go(missing);
+    if (!checkPage()) return;
+    const p = firstUnansweredPage();
+    if (p !== -1) {
+      goPage(p);
+      checkPage();
       return;
     }
     const raw = MBTI.rawScores(data, answers);
@@ -118,18 +169,5 @@
     location.href = 'result.html?' + MBTI.encodeRaw(raw);
   }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.altKey || e.ctrlKey || e.metaKey) return;
-    if (/^[1-5]$/.test(e.key)) {
-      const input = app.querySelector(`input[value="${e.key}"]`);
-      if (input) {
-        input.checked = true;
-        choose(Number(e.key));
-      }
-    } else if (e.key === 'ArrowLeft' && !(e.target instanceof HTMLInputElement)) {
-      go(index - 1);
-    }
-  });
-
-  render(false);
+  render();
 })();
