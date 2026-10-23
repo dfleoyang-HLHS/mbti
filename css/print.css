@@ -1,0 +1,29 @@
+/* 完整報告：列印／另存 PDF 與 html2pdf 匯出樣式 */
+
+.avoid-break { break-inside: avoid; page-break-inside: avoid; }
+
+/* html2pdf 匯出時套用（以 body.pdf-export 切換） */
+body.pdf-export { background: #ffffff; }
+body.pdf-export .no-print { display: none !important; }
+body.pdf-export .container { max-width: 720px; padding: 0; }
+body.pdf-export .card { box-shadow: none; }
+
+@media print {
+  @page { size: A4; margin: 14mm; }
+
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+  }
+
+  body { background: #ffffff; font-size: 11.5pt; }
+  .no-print { display: none !important; }
+  .container { max-width: none; padding: 0; }
+  .card { box-shadow: none; border-color: #cccccc; }
+  .bar, .bar-first, .bar-second, .tags li, .dim-unclear {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+}

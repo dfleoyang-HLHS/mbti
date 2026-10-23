@@ -114,8 +114,11 @@ mbti/
 ├─ report.html          完整報告頁（含 PDF 下載）
 ├─ css/style.css
 ├─ css/print.css        報告列印／PDF 樣式
-├─ js/quiz.js           作答與計分邏輯
-├─ js/report.js         報告產生與下載
+├─ js/common.js         共用：資料載入、計分、長條圖
+├─ js/quiz.js           作答流程
+├─ js/result.js         簡易結果頁
+├─ js/report.js         完整報告與 PDF 下載
+├─ js/vendor/           html2pdf.js（MIT 授權，直接隨網站提供，不依賴外部 CDN）
 ├─ data/questions.json  題庫
 ├─ data/types.json      16 型描述
 ├─ docs/                企劃書、題目設計說明、試測報告
