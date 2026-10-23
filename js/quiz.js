@@ -82,6 +82,10 @@
 
   function render() {
     const isLast = page === pageCount - 1;
+    // 每個階段使用不同色系（css/style.css 的 body[data-stage]）
+    document.body.dataset.stage = String(page + 1);
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.content = getComputedStyle(document.body).getPropertyValue('--accent').trim();
     const stageTitle = el('div', { class: 'stage-title', tabindex: '-1', text: `第 ${page + 1} / ${pageCount} 階段` });
     doneText = el('span');
     progressBarFill = el('div', { class: 'progress-bar' });

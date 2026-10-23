@@ -14,6 +14,7 @@
   --bar-second: #c98a3d;
   --warn-bg: #fff6e0;
   --warn-text: #6b4e00;
+  --missing: #c62828;
   --radius: 14px;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.05);
   color-scheme: light;
@@ -34,6 +35,7 @@
     --bar-second: #e0a95f;
     --warn-bg: #3a3220;
     --warn-text: #f1d999;
+    --missing: #f08080;
     --shadow: none;
     color-scheme: dark;
   }
@@ -53,6 +55,7 @@
   --bar-second: #e0a95f;
   --warn-bg: #3a3220;
   --warn-text: #f1d999;
+  --missing: #f08080;
   --shadow: none;
   color-scheme: dark;
 }
@@ -154,6 +157,15 @@ li { margin-bottom: 4px; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 /* 首頁 */
+.home-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--accent);
+  margin: 8px 0 4px;
+}
+.home-subtitle { font-size: 1.1rem; color: var(--text-muted); margin: 0 0 20px; }
+
 .facts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -209,11 +221,11 @@ li { margin-bottom: 4px; }
   transition: width 0.25s ease;
 }
 
-.stage-title { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.stage-title { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
 /* 換階段時程式會把焦點移到此標題（供螢幕報讀），不需顯示焦點框 */
 .stage-title:focus { outline: none; }
 
-.q-item { padding: 18px 16px 14px; margin-bottom: 12px; scroll-margin-top: 16px; }
+.q-item { padding: 18px 16px 14px; margin-bottom: 12px; scroll-margin-top: 16px; border-top: 4px solid var(--accent); }
 .q-item fieldset { border: none; margin: 0; padding: 0; min-width: 0; }
 .q-item legend {
   font-size: 1.08rem;
@@ -223,8 +235,8 @@ li { margin-bottom: 4px; }
   padding: 0;
 }
 .q-num { color: var(--accent); margin-right: 4px; font-variant-numeric: tabular-nums; }
-.q-item.missing { border-color: var(--bar-second); box-shadow: 0 0 0 2px var(--bar-second); }
-.q-missing-note { display: none; margin: 10px 0 0; font-size: 0.86rem; color: var(--warn-text); text-align: center; }
+.q-item.missing { border-color: var(--missing); box-shadow: 0 0 0 2px var(--missing); }
+.q-missing-note { display: none; margin: 10px 0 0; font-size: 0.86rem; font-weight: 600; color: var(--missing); text-align: center; }
 .q-item.missing .q-missing-note { display: block; }
 
 .likert {
@@ -296,6 +308,32 @@ li { margin-bottom: 4px; }
   gap: 10px;
   margin-top: 20px;
 }
+
+/* 作答階段色系：6 個階段各用一個色系（對比度皆通過 WCAG AA） */
+body[data-stage="1"] { --accent: #2f6f6a; --bg: #eef4f3; --accent-soft: #e3efed; --accent-text: #ffffff; } /* 青綠 */
+body[data-stage="2"] { --accent: #2c5e9e; --bg: #eef2f8; --accent-soft: #e2eaf5; --accent-text: #ffffff; } /* 藍 */
+body[data-stage="3"] { --accent: #6b4fa0; --bg: #f2eff7; --accent-soft: #e9e3f3; --accent-text: #ffffff; } /* 紫 */
+body[data-stage="4"] { --accent: #a63f6a; --bg: #f8eff3; --accent-soft: #f3e2ea; --accent-text: #ffffff; } /* 玫紅 */
+body[data-stage="5"] { --accent: #8a5a12; --bg: #f7f2e9; --accent-soft: #f1e6d3; --accent-text: #ffffff; } /* 琥珀 */
+body[data-stage="6"] { --accent: #3d7330; --bg: #eff5ed; --accent-soft: #e3eedf; --accent-text: #ffffff; } /* 森綠 */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body[data-stage="1"] { --accent: #6fbdb5; --bg: #141b1b; --accent-soft: #23393a; --accent-text: #0f1a19; }
+  :root:not([data-theme="light"]) body[data-stage="2"] { --accent: #86aee6; --bg: #14181f; --accent-soft: #22304a; --accent-text: #0f1a19; }
+  :root:not([data-theme="light"]) body[data-stage="3"] { --accent: #b9a3e3; --bg: #18161f; --accent-soft: #302a45; --accent-text: #0f1a19; }
+  :root:not([data-theme="light"]) body[data-stage="4"] { --accent: #e891b4; --bg: #1e1519; --accent-soft: #45283a; --accent-text: #0f1a19; }
+  :root:not([data-theme="light"]) body[data-stage="5"] { --accent: #e0b062; --bg: #1d1912; --accent-soft: #45391f; --accent-text: #0f1a19; }
+  :root:not([data-theme="light"]) body[data-stage="6"] { --accent: #93c785; --bg: #151b14; --accent-soft: #2a3f25; --accent-text: #0f1a19; }
+}
+
+:root[data-theme="dark"] body[data-stage="1"] { --accent: #6fbdb5; --bg: #141b1b; --accent-soft: #23393a; --accent-text: #0f1a19; }
+:root[data-theme="dark"] body[data-stage="2"] { --accent: #86aee6; --bg: #14181f; --accent-soft: #22304a; --accent-text: #0f1a19; }
+:root[data-theme="dark"] body[data-stage="3"] { --accent: #b9a3e3; --bg: #18161f; --accent-soft: #302a45; --accent-text: #0f1a19; }
+:root[data-theme="dark"] body[data-stage="4"] { --accent: #e891b4; --bg: #1e1519; --accent-soft: #45283a; --accent-text: #0f1a19; }
+:root[data-theme="dark"] body[data-stage="5"] { --accent: #e0b062; --bg: #1d1912; --accent-soft: #45391f; --accent-text: #0f1a19; }
+:root[data-theme="dark"] body[data-stage="6"] { --accent: #93c785; --bg: #151b14; --accent-soft: #2a3f25; --accent-text: #0f1a19; }
+
+body[data-stage] { transition: background-color 0.3s ease; }
 
 /* 結果與報告 */
 .type-hero { text-align: center; padding: 28px 20px; }
@@ -382,6 +420,7 @@ li { margin-bottom: 4px; }
   h1 { font-size: 1.5rem; }
   .card { padding: 16px; }
   .type-code { font-size: 2.8rem; }
+  .home-title { font-size: 2rem; }
   .likert .dot { width: 44px; height: 44px; }
   .btn-row .btn { flex: 1 1 100%; }
 }
