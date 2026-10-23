@@ -6,7 +6,11 @@
   <title>測驗結果｜16型MBTI性格探索</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%232f6f6a%27/%3E%3Ctext x=%2732%27 y=%2743%27 font-size=%2730%27 font-family=%27Arial,sans-serif%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3E16%3C/text%3E%3C/svg%3E">
   <meta name="theme-color" content="#2f6f6a">
-  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // 套用使用者選擇的深色／淺色模式（放在樣式表前，避免畫面閃爍）
+    try { const t = localStorage.getItem('mbti-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=20261023-2">
 </head>
 <body>
   <main class="container">
@@ -19,7 +23,7 @@
     </div>
   </main>
 
-  <script src="js/common.js"></script>
-  <script src="js/result.js"></script>
+  <script src="js/common.js?v=20261023-2"></script>
+  <script src="js/result.js?v=20261023-2"></script>
 </body>
 </html>
