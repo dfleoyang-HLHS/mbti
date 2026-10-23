@@ -110,6 +110,9 @@
     status.textContent = 'PDF 產生中，請稍候…';
     useLightTheme();
     document.body.classList.add('pdf-export');
+    // iOS Safari 的 canvas 面積上限約 1,670 萬像素；依報告高度調降解析度（換頁留白另估 30%）
+    const estHeight = report.offsetHeight * 1.3;
+    const scale = Math.max(1, Math.min(2, Math.sqrt(14e6 / (720 * estHeight))));
     try {
       await window.html2pdf()
         .set({
@@ -117,7 +120,7 @@
           // 使用英數檔名，避免部分瀏覽器無法處理中文檔名
           filename: `MBTI16-${result.code}-report.pdf`,
           image: { type: 'jpeg', quality: 0.95 },
-          html2canvas: { scale: 2, windowWidth: 800, backgroundColor: '#ffffff' },
+          html2canvas: { scale, windowWidth: 800, backgroundColor: '#ffffff' },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
           pagebreak: { mode: ['css', 'legacy'], avoid: '.avoid-break' },
         })

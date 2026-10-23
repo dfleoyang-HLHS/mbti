@@ -131,7 +131,6 @@ li { margin-bottom: 4px; }
   text-decoration: none;
   cursor: pointer;
 }
-.btn:hover { filter: brightness(1.06); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
 .btn-outline { background: transparent; color: var(--accent); }
 .btn-text {
@@ -167,7 +166,7 @@ li { margin-bottom: 4px; }
   padding: 12px 8px;
   text-align: center;
 }
-.fact strong { display: block; font-size: 1.3rem; }
+.fact strong { display: block; font-size: 1.3rem; white-space: nowrap; }
 .fact span { font-size: 0.85rem; color: var(--text-muted); }
 
 .dim-list { list-style: none; padding: 0; margin: 0; }
@@ -231,7 +230,6 @@ li { margin-bottom: 4px; }
   background: var(--surface);
   cursor: pointer;
 }
-.scale label:hover { border-color: var(--accent); }
 .scale input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; flex-shrink: 0; }
 .scale input:checked + span { font-weight: 700; }
 .scale label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
@@ -341,7 +339,17 @@ li { margin-bottom: 4px; }
 
 .quiz-nav + p { margin-top: 16px; }
 
+/* 只在有滑鼠的裝置顯示 hover 效果，避免手機點選後殘留外框，看起來像已選取 */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { filter: brightness(1.06); }
+  .scale label:hover { border-color: var(--accent); }
+}
+
 /* 觸控裝置不顯示鍵盤操作提示 */
-@media (hover: none) {
+@media (hover: none), (pointer: coarse) {
   .kbd-hint { display: none; }
+}
+
+@media (max-width: 360px) {
+  .fact strong { font-size: 1.1rem; }
 }
