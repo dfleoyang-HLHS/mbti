@@ -209,36 +209,85 @@ li { margin-bottom: 4px; }
   transition: width 0.25s ease;
 }
 
-.question fieldset { border: none; margin: 0; padding: 0; min-width: 0; }
-.question legend {
-  font-size: 1.25rem;
+.stage-title { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+/* 換階段時程式會把焦點移到此標題（供螢幕報讀），不需顯示焦點框 */
+.stage-title:focus { outline: none; }
+
+.q-item { padding: 18px 16px 14px; margin-bottom: 12px; scroll-margin-top: 16px; }
+.q-item fieldset { border: none; margin: 0; padding: 0; min-width: 0; }
+.q-item legend {
+  font-size: 1.08rem;
   font-weight: 600;
-  line-height: 1.55;
-  margin-bottom: 20px;
+  line-height: 1.6;
+  margin-bottom: 14px;
   padding: 0;
 }
+.q-num { color: var(--accent); margin-right: 4px; font-variant-numeric: tabular-nums; }
+.q-item.missing { border-color: var(--bar-second); box-shadow: 0 0 0 2px var(--bar-second); }
+.q-missing-note { display: none; margin: 10px 0 0; font-size: 0.86rem; color: var(--warn-text); text-align: center; }
+.q-item.missing .q-missing-note { display: block; }
 
-.scale { display: grid; gap: 10px; }
-.scale label {
+.likert {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.likert label {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 10px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
+  justify-content: center;
   cursor: pointer;
 }
-.scale input { width: 20px; height: 20px; accent-color: var(--accent); margin: 0; flex-shrink: 0; }
-.scale input:checked + span { font-weight: 700; }
-.scale label:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
-.scale .num {
-  display: inline-block;
-  min-width: 1.4em;
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
+.likert input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
 }
+.likert .dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.likert input:checked + .dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.likert input:focus-visible + .dot { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.likert-anchors {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 6px auto 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.stage-note { margin-top: 12px; text-align: center; font-size: 0.9rem; color: var(--warn-text); }
 
 .quiz-nav {
   display: flex;
@@ -333,21 +382,15 @@ li { margin-bottom: 4px; }
   h1 { font-size: 1.5rem; }
   .card { padding: 16px; }
   .type-code { font-size: 2.8rem; }
-  .question legend { font-size: 1.12rem; }
+  .likert .dot { width: 44px; height: 44px; }
   .btn-row .btn { flex: 1 1 100%; }
 }
 
-.quiz-nav + p { margin-top: 16px; }
 
 /* 只在有滑鼠的裝置顯示 hover 效果，避免手機點選後殘留外框，看起來像已選取 */
 @media (hover: hover) and (pointer: fine) {
   .btn:hover { filter: brightness(1.06); }
-  .scale label:hover { border-color: var(--accent); }
-}
-
-/* 觸控裝置不顯示鍵盤操作提示 */
-@media (hover: none), (pointer: coarse) {
-  .kbd-hint { display: none; }
+  .likert label:hover .dot { border-color: var(--accent); }
 }
 
 @media (max-width: 360px) {
