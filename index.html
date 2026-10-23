@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>16型MBTI性格探索</title>
+  <meta name="description" content="60 題自我探索測驗，了解你在四個向度上的偏好，並取得 16 型類型代碼與完整報告。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="site-header">
+      <a class="site-title" href="index.html">16型MBTI性格探索</a>
+    </header>
+
+    <section class="card">
+      <h1>認識自己的性格偏好</h1>
+      <p>透過 60 道情境題，了解你在四個向度上的偏好，取得你的 16 型類型代碼，並可查看或下載完整報告：優勢、工作風格、溝通方式與職涯方向參考。</p>
+      <div class="facts">
+        <div class="fact"><strong>60</strong><span>題</span></div>
+        <div class="fact"><strong>10～12</strong><span>分鐘</span></div>
+        <div class="fact"><strong>16</strong><span>種類型</span></div>
+      </div>
+      <div class="btn-row">
+        <a class="btn" id="start-btn" href="quiz.html">開始測驗</a>
+        <a class="btn btn-outline" id="resume-btn" href="quiz.html?resume=1" hidden>繼續上次的作答</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>測量的四個向度</h2>
+      <ul class="dim-list">
+        <li><span class="letters">E ↔ I</span><span><strong>能量來源</strong>：從與人互動，或從獨處中獲得能量</span></li>
+        <li><span class="letters">S ↔ N</span><span><strong>資訊接收</strong>：重視具體事實，或整體模式與可能性</span></li>
+        <li><span class="letters">T ↔ F</span><span><strong>決策方式</strong>：以邏輯原則為主，或以價值與人際影響為主</span></li>
+        <li><span class="letters">J ↔ P</span><span><strong>生活態度</strong>：偏好計畫與結構，或彈性與開放</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>作答說明</h2>
+      <ul>
+        <li>請依照你<strong>平常、自然的狀態</strong>作答，而不是你希望成為的樣子。</li>
+        <li>每題從「非常不同意」到「非常同意」五個選項中擇一；答案沒有對錯之分。</li>
+        <li>不需要想太久，第一直覺通常最準確。</li>
+        <li>可以隨時按「上一題」修改答案；作答進度只暫存在你的瀏覽器中。</li>
+      </ul>
+      <p class="notice"><strong>隱私說明：</strong>本網站在你的瀏覽器中計分，不蒐集、不傳送任何作答資料或個人資料。</p>
+    </section>
+
+    <footer class="site-footer">
+      <p>本測驗僅供自我探索參考，非心理診斷工具，不宜作為招募、任用、升遷或職涯決策的唯一依據。</p>
+      <p>MBTI® 為 The Myers-Briggs Company 之註冊商標；本測驗依據榮格心理類型／MBTI 類型理論自編，非官方 MBTI 測驗，與該公司無任何關聯。</p>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script>
+    (() => {
+      const saved = MBTI.progress.load();
+      if (saved && Object.keys(saved.answers).length > 0) {
+        const resume = document.getElementById('resume-btn');
+        resume.hidden = false;
+        resume.textContent = `繼續上次的作答（已完成 ${Object.keys(saved.answers).length} 題）`;
+        document.getElementById('start-btn').textContent = '重新開始';
+        document.getElementById('start-btn').href = 'quiz.html?new=1';
+      }
+    })();
+  </script>
+</body>
+</html>
