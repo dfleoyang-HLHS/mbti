@@ -146,5 +146,51 @@ const MBTI = (() => {
     );
   }
 
-  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError };
+  // 深色／淺色模式切換：選擇記在瀏覽器；沒有選擇時跟隨系統設定
+  const THEME_KEY = 'mbti-theme';
+  const SUN = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+
+  function currentTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function syncThemeColor() {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+  }
+
+  function initThemeToggle() {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+    const btn = el('button', { class: 'theme-toggle no-print', type: 'button' });
+    const update = () => {
+      const dark = currentTheme() === 'dark';
+      // 顯示「按下後會切換成」的模式圖示
+      btn.innerHTML = dark ? SUN : MOON;
+      const label = dark ? '切換為淺色模式' : '切換為深色模式';
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+      syncThemeColor();
+    };
+    btn.addEventListener('click', () => {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (e) {
+        /* 無法儲存時本頁仍可切換 */
+      }
+      update();
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update);
+    header.append(btn);
+    update();
+  }
+
+  initThemeToggle();
+
+  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor };
 })();
