@@ -11,7 +11,7 @@
     // 套用使用者選擇的深色／淺色模式（放在樣式表前，避免畫面閃爍）
     try { const t = localStorage.getItem('mbti-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <link rel="stylesheet" href="css/style.css?v=20261023-2">
+  <link rel="stylesheet" href="css/style.css?v=20261026-1">
 </head>
 <body>
   <main class="container">
@@ -21,6 +21,81 @@
         <p class="home-subtitle">認識自己的性格偏好</p>
       </div>
     </header>
+
+    <!-- 首頁插畫（自繪 SVG，無版權疑慮；顏色隨深色／淺色模式調整） -->
+    <figure class="hero-art">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" role="img" aria-labelledby="hero-art-title hero-art-desc">
+        <title id="hero-art-title">一起聚會的朋友們</title>
+        <desc id="hero-art-desc">六位不同年齡、膚色與髮型的成人圍坐在桌邊，一邊玩桌遊、一邊聚餐聊天，氣氛愉快。</desc>
+        <rect width="800" height="340" rx="24" fill="var(--art-bg)"/>
+        <circle cx="90" cy="70" r="46" fill="var(--art-deco)"/><circle cx="720" cy="96" r="60" fill="var(--art-deco)"/><circle cx="420" cy="40" r="24" fill="var(--art-deco)"/>
+        <path d="M20 16 Q400 56 780 16" stroke="var(--art-line)" stroke-width="2" fill="none"/>
+        <path d="M41.7 19.2 h20 l-10 18z" fill="#2f6f6a" opacity=".85"/>
+        <path d="M105.0 24.8 h20 l-10 18z" fill="#2c5e9e" opacity=".85"/>
+        <path d="M168.3 29.2 h20 l-10 18z" fill="#6b4fa0" opacity=".85"/>
+        <path d="M231.7 32.5 h20 l-10 18z" fill="#a63f6a" opacity=".85"/>
+        <path d="M295.0 34.8 h20 l-10 18z" fill="#8a5a12" opacity=".85"/>
+        <path d="M358.3 35.9 h20 l-10 18z" fill="#3d7330" opacity=".85"/>
+        <path d="M421.7 35.9 h20 l-10 18z" fill="#2f6f6a" opacity=".85"/>
+        <path d="M485.0 34.8 h20 l-10 18z" fill="#2c5e9e" opacity=".85"/>
+        <path d="M548.3 32.5 h20 l-10 18z" fill="#6b4fa0" opacity=".85"/>
+        <path d="M611.7 29.2 h20 l-10 18z" fill="#a63f6a" opacity=".85"/>
+        <path d="M675.0 24.8 h20 l-10 18z" fill="#8a5a12" opacity=".85"/>
+        <path d="M738.3 19.2 h20 l-10 18z" fill="#3d7330" opacity=".85"/>
+        <g class="person p0"><path d="M72 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#2f6f6a"/><rect x="110" y="170" width="16" height="22" rx="6" fill="#f1c9a5"/><circle cx="118" cy="150" r="27" fill="#f1c9a5"/><circle cx="118" cy="116" r="12" fill="#2b2118"/><path d="M90 150 q-2 -30 28 -30 q30 0 28 30 q-8 -16 -28 -16 q-20 0 -28 16z" fill="#2b2118"/><circle cx="109" cy="152" r="2.6" fill="#2a1d14"/><circle cx="127" cy="152" r="2.6" fill="#2a1d14"/><circle cx="103" cy="160" r="4" fill="#e8806a" opacity=".35"/><circle cx="133" cy="160" r="4" fill="#e8806a" opacity=".35"/><path d="M111 161 q7 7 14 0" stroke="#2a1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>
+        <g class="person p1"><path d="M186 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#2c5e9e"/><rect x="224" y="160" width="16" height="22" rx="6" fill="#c98d62"/><circle cx="232" cy="140" r="27" fill="#c98d62"/><path d="M204 138 q-2 -30 28 -30 q30 0 28 30 q-10 -14 -30 -14 q-16 0 -26 14z" fill="#1a1a1a"/><circle cx="223" cy="142" r="2.6" fill="#2a1d14"/><circle cx="241" cy="142" r="2.6" fill="#2a1d14"/><circle cx="217" cy="150" r="4" fill="#e8806a" opacity=".35"/><circle cx="247" cy="150" r="4" fill="#e8806a" opacity=".35"/><path d="M225 151 q7 7 14 0" stroke="#2a1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/><g fill="none" stroke="#2a1d14" stroke-width="2"><circle cx="223" cy="142" r="7"/><circle cx="241" cy="142" r="7"/><path d="M230 142 h4"/></g></g>
+        <g class="person p2"><circle cx="320" cy="144" r="15" fill="#6b3e22"/><circle cx="372" cy="144" r="15" fill="#6b3e22"/><circle cx="328" cy="126" r="16" fill="#6b3e22"/><circle cx="364" cy="126" r="16" fill="#6b3e22"/><circle cx="346" cy="118" r="16" fill="#6b3e22"/><circle cx="316" cy="162" r="12" fill="#6b3e22"/><circle cx="376" cy="162" r="12" fill="#6b3e22"/><path d="M300 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#6b4fa0"/><rect x="338" y="172" width="16" height="22" rx="6" fill="#e8b48c"/><circle cx="346" cy="152" r="27" fill="#e8b48c"/><circle cx="337" cy="154" r="2.6" fill="#2a1d14"/><circle cx="355" cy="154" r="2.6" fill="#2a1d14"/><circle cx="331" cy="162" r="4" fill="#e8806a" opacity=".35"/><circle cx="361" cy="162" r="4" fill="#e8806a" opacity=".35"/><path d="M338 162 q8 12 16 0z" fill="#7a2e2e"/></g>
+        <g class="person p3"><path d="M414 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#a63f6a"/><rect x="452" y="158" width="16" height="22" rx="6" fill="#8d5a3b"/><circle cx="460" cy="138" r="27" fill="#8d5a3b"/><path d="M433 142 q-2 -14 4 -18 v14z M487 142 q2 -14 -4 -18 v14z" fill="#141010"/><path d="M440 146 q20 30 40 0 q-4 22 -20 22 q-16 0 -20 -22z" fill="#141010"/><circle cx="451" cy="140" r="2.6" fill="#2a1d14"/><circle cx="469" cy="140" r="2.6" fill="#2a1d14"/><circle cx="445" cy="148" r="4" fill="#e8806a" opacity=".35"/><circle cx="475" cy="148" r="4" fill="#e8806a" opacity=".35"/></g>
+        <g class="person p4"><path d="M544 146 q0 -34 30 -34 q30 0 30 34 v52 q-30 10 -60 0z" fill="#b9b9b9"/><path d="M528 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#8a5a12"/><rect x="566" y="170" width="16" height="22" rx="6" fill="#f3d2b3"/><circle cx="574" cy="150" r="27" fill="#f3d2b3"/><path d="M546 152 q-2 -32 28 -32 q30 0 28 32 q-6 -18 -24 -20 q-4 10 -32 20z" fill="#b9b9b9"/><circle cx="565" cy="152" r="2.6" fill="#2a1d14"/><circle cx="583" cy="152" r="2.6" fill="#2a1d14"/><circle cx="559" cy="160" r="4" fill="#e8806a" opacity=".35"/><circle cx="589" cy="160" r="4" fill="#e8806a" opacity=".35"/><path d="M566 160 q8 12 16 0z" fill="#7a2e2e"/></g>
+        <g class="person p5"><path d="M642 266 v-46 q0 -30 30 -32 h32 q30 2 30 32 v46z" fill="#3d7330"/><rect x="680" y="166" width="16" height="22" rx="6" fill="#b07850"/><circle cx="688" cy="146" r="27" fill="#b07850"/><path d="M657 164 q-8 -50 31 -50 q39 0 31 50 h-7 q0 -14 -4 -22 h-40 q-4 8 -4 22z" fill="#3a2a1c"/><circle cx="679" cy="148" r="2.6" fill="#2a1d14"/><circle cx="697" cy="148" r="2.6" fill="#2a1d14"/><circle cx="673" cy="156" r="4" fill="#e8806a" opacity=".35"/><circle cx="703" cy="156" r="4" fill="#e8806a" opacity=".35"/><path d="M681 157 q7 7 14 0" stroke="#2a1d14" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>
+        <path d="M150 222 L196 252" stroke="#2f6f6a" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="196" cy="252" r="9" fill="#f1c9a5"/>
+        <path d="M210 214 L176 160" stroke="#2c5e9e" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="176" cy="160" r="9" fill="#c98d62"/>
+        <path d="M163 136 h26 l-4 30 h-18z" fill="#f6f1e7" stroke="var(--art-line)" stroke-width="1.5"/><path d="M166 146 h20 l-2 18 h-16z" fill="#e0a23a"/>
+        <path d="M380 222 L410 254" stroke="#6b4fa0" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="410" cy="254" r="9" fill="#e8b48c"/>
+        <path d="M428 222 L404 254" stroke="#a63f6a" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="404" cy="254" r="9" fill="#8d5a3b"/>
+        <path d="M492 222 L524 172" stroke="#a63f6a" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="524" cy="172" r="9" fill="#8d5a3b"/>
+        <path d="M512 148 h26 l-4 30 h-18z" fill="#f6f1e7" stroke="var(--art-line)" stroke-width="1.5"/><path d="M515 158 h20 l-2 18 h-16z" fill="#c0392b" opacity=".85"/>
+        <path d="M606 222 L640 252" stroke="#8a5a12" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="640" cy="252" r="9" fill="#f3d2b3"/>
+        <path d="M656 222 L624 250" stroke="#3d7330" stroke-width="17" stroke-linecap="round"/>
+        <circle cx="624" cy="250" r="9" fill="#b07850"/>
+        <g stroke="#e0a23a" stroke-width="3" stroke-linecap="round"><path d="M164 126 l-7 -8"/><path d="M176 122 v-11"/><path d="M188 126 l7 -8"/></g>
+        <g stroke="#e0a23a" stroke-width="3" stroke-linecap="round"><path d="M513 138 l-7 -8"/><path d="M525 134 v-11"/><path d="M537 138 l7 -8"/></g>
+        <rect x="40" y="262" width="720" height="18" rx="9" fill="#c98f58"/>
+        <rect x="56" y="280" width="688" height="44" fill="#a9733f"/>
+        <rect x="56" y="280" width="688" height="10" fill="#8e5f33" opacity=".5"/>
+        <rect x="90" y="324" width="18" height="16" fill="#8e5f33"/><rect x="692" y="324" width="18" height="16" fill="#8e5f33"/>
+        <rect x="330" y="248" width="140" height="16" rx="3" fill="#f6f1e7" stroke="#8e5f33" stroke-width="1.5"/>
+        <rect x="336" y="252" width="14" height="8" rx="1.5" fill="#2f6f6a"/>
+        <rect x="355" y="252" width="14" height="8" rx="1.5" fill="#2c5e9e"/>
+        <rect x="374" y="252" width="14" height="8" rx="1.5" fill="#6b4fa0"/>
+        <rect x="393" y="252" width="14" height="8" rx="1.5" fill="#a63f6a"/>
+        <rect x="412" y="252" width="14" height="8" rx="1.5" fill="#8a5a12"/>
+        <rect x="431" y="252" width="14" height="8" rx="1.5" fill="#3d7330"/>
+        <rect x="450" y="252" width="14" height="8" rx="1.5" fill="#2f6f6a"/>
+        <g transform="rotate(-12 206 253)"><rect x="197" y="244" width="18" height="18" rx="4" fill="#ffffff" stroke="#8e5f33" stroke-width="1.5"/><circle cx="202" cy="249" r="2" fill="#2a1d14"/><circle cx="210" cy="257" r="2" fill="#2a1d14"/><circle cx="206" cy="253" r="2" fill="#2a1d14"/></g>
+        <g transform="rotate(10 232 253)"><rect x="223" y="244" width="18" height="18" rx="4" fill="#ffffff" stroke="#8e5f33" stroke-width="1.5"/><circle cx="228" cy="249" r="2" fill="#2a1d14"/><circle cx="236" cy="257" r="2" fill="#2a1d14"/><circle cx="232" cy="253" r="2" fill="#2a1d14"/></g>
+        <ellipse cx="110" cy="259" rx="30" ry="7" fill="#ffffff" stroke="#d8cfc0" stroke-width="1.5"/>
+        <ellipse cx="110" cy="254" rx="17" ry="6" fill="#e9a23b"/>
+        <ellipse cx="640" cy="259" rx="30" ry="7" fill="#ffffff" stroke="#d8cfc0" stroke-width="1.5"/>
+        <ellipse cx="640" cy="254" rx="17" ry="6" fill="#d9534f"/>
+        <ellipse cx="560" cy="259" rx="30" ry="7" fill="#ffffff" stroke="#d8cfc0" stroke-width="1.5"/>
+        <ellipse cx="560" cy="254" rx="17" ry="6" fill="#7cb342"/>
+        <ellipse cx="290" cy="258" rx="26" ry="7" fill="#e9b75f"/><ellipse cx="290" cy="257" rx="20" ry="5" fill="#d9573b"/><circle cx="282" cy="256" r="2.5" fill="#fff6d6"/><circle cx="296" cy="258" r="2.5" fill="#fff6d6"/>
+        <path d="M491 238 h18 l-2 24 h-14z" fill="#6fbdb5"/>
+        <path d="M711 238 h18 l-2 24 h-14z" fill="#86aee6"/>
+        <path d="M53 238 h18 l-2 24 h-14z" fill="#e891b4"/>
+        <g><path d="M650 54 h76 a12 12 0 0 1 12 12 v22 a12 12 0 0 1 -12 12 h-46 l-14 14 v-14 h-16 a12 12 0 0 1 -12 -12 v-22 a12 12 0 0 1 12 -12z" fill="var(--art-bubble)" stroke="var(--art-line)" stroke-width="1.5"/>
+        <circle cx="668" cy="77" r="4" fill="#a63f6a"/><circle cx="688" cy="77" r="4" fill="#a63f6a"/><circle cx="708" cy="77" r="4" fill="#a63f6a"/></g>
+        <g><path d="M28 58 h48 a12 12 0 0 1 12 12 v16 a12 12 0 0 1 -12 12 h-4 l8 14 l-20 -14 h-32 a12 12 0 0 1 -12 -12 v-16 a12 12 0 0 1 12 -12z" fill="var(--art-bubble)" stroke="var(--art-line)" stroke-width="1.5"/>
+        <path d="M52 90 c-10 -8 -12 -16 -6 -20 c4 -3 8 -1 10 3 c2 -4 6 -6 10 -3 c6 4 4 12 -6 20 l-4 3z" fill="#d9534f"/></g>
+        </svg>
+    </figure>
 
     <section class="card">
       <p>透過 60 道情境題，了解你在四個向度上的偏好，取得你的 16 型類型代碼，並可查看或下載完整報告：優勢、工作風格、溝通方式與職涯方向參考。</p>
@@ -62,7 +137,7 @@
     </footer>
   </main>
 
-  <script src="js/common.js?v=20261023-2"></script>
+  <script src="js/common.js?v=20261026-1"></script>
   <script>
     (() => {
       const saved = MBTI.progress.load();

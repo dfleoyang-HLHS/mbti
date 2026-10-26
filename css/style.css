@@ -217,6 +217,32 @@ li { margin-bottom: 4px; }
   font-size: 0.92rem;
 }
 
+/* 首頁插畫 */
+.hero-art {
+  --art-bg: #e3efed;
+  --art-deco: #d3e6e3;
+  --art-line: #8aa29f;
+  --art-bubble: #ffffff;
+  margin: 0 0 16px;
+}
+.hero-art svg { display: block; width: 100%; height: auto; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero-art {
+    --art-bg: #23393a;
+    --art-deco: #2b4647;
+    --art-line: #5d7b78;
+    --art-bubble: #e8e6e1;
+  }
+}
+
+:root[data-theme="dark"] .hero-art {
+  --art-bg: #23393a;
+  --art-deco: #2b4647;
+  --art-line: #5d7b78;
+  --art-bubble: #e8e6e1;
+}
+
 /* 作答頁 */
 .progress-wrap { margin-bottom: 20px; }
 .progress-meta {
