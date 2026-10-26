@@ -51,6 +51,7 @@
         el('a', { class: 'btn', href: `report.html?${query}`, text: '查看完整報告' }),
         el('a', { class: 'btn btn-outline', href: `report.html?${query}&download=1`, text: '下載完整報告（PDF）' }),
       ]),
+      MBTI.inAppNotice(),
       el('p', { class: 'small muted', style: 'margin-top:12px' }, '小提醒：把這個頁面加入書籤，日後即可再次查看你的結果。'),
     ]),
     el('div', { class: 'btn-row center' }, [el('a', { class: 'btn-text', href: 'quiz.html?new=1', text: '重新測驗' })]),
