@@ -146,6 +146,31 @@ const MBTI = (() => {
     );
   }
 
+  // App 內建瀏覽器（LINE、Facebook 等）常無法下載檔案，提示改用一般瀏覽器開啟
+  function inAppBrowserName() {
+    const ua = navigator.userAgent;
+    if (/\bLine\//i.test(ua)) return 'LINE';
+    if (/FBAN|FBAV/.test(ua)) return 'Facebook';
+    if (/Instagram/.test(ua)) return 'Instagram';
+    if (/MicroMessenger/i.test(ua)) return '微信';
+    return null;
+  }
+
+  function inAppNotice() {
+    const name = inAppBrowserName();
+    if (!name) return null;
+    const box = el('p', { class: 'notice small' }, [
+      `你目前在 ${name} 的內建瀏覽器中，可能無法下載 PDF。建議改用 Safari 或 Chrome 開啟本頁。`,
+    ]);
+    if (name === 'LINE') {
+      // LINE 支援 openExternalBrowser=1 參數，以手機預設瀏覽器開啟連結
+      const url = new URL(location.href);
+      url.searchParams.set('openExternalBrowser', '1');
+      box.append(' ', el('a', { href: url.toString(), text: '用預設瀏覽器開啟' }));
+    }
+    return box;
+  }
+
   // 深色／淺色模式切換：選擇記在瀏覽器；沒有選擇時跟隨系統設定
   const THEME_KEY = 'mbti-theme';
   const SUN = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
@@ -192,5 +217,5 @@ const MBTI = (() => {
 
   initThemeToggle();
 
-  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor };
+  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor, inAppNotice };
 })();
