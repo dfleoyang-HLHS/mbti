@@ -1,18 +1,20 @@
 # 職涯探索雙網站 — 專案企劃書
 
 > 16型MBTI性格探索 ＋ Holland 職業興趣探索（RIASEC）
-> 版本：v0.2（草案）
+> 版本：v0.3（草案）
 > 目標對象：成人（18 歲以上）
 > 狀態：企劃階段，Holland 網站尚未開始開發
 > 相關文件：[`PLAN.md`](PLAN.md)（16 型性格探索企劃書，已上線）
 
-### 已定案事項（v0.2）
+### 已定案事項（v0.3）
 
 | 項目 | 決定 |
 |---|---|
 | 平台方案 | **方案 B：兩個獨立網站**（各自的 repo 與 GitHub Pages） |
 | 題目來源 | **參考學術界公開的 RIASEC 題目**，經授權查證與中文化程序後使用 |
 | 整合報告 | **第一版就提供**，做成 Holland 網站的子網頁 |
+| 新 repo 與網址 | **`dfleoyang-HLHS/holland`** → `https://dfleoyang-hlhs.github.io/holland/` |
+| 網站名稱 | **Holland 職業興趣探索** |
 
 ---
 
@@ -58,7 +60,7 @@
 
 | | 16型MBTI性格探索 | Holland 職業興趣探索 |
 |---|---|---|
-| repo | `dfleoyang-HLHS/mbti`（現有） | `dfleoyang-HLHS/holland`（新建，名稱待確認） |
+| repo | `dfleoyang-HLHS/mbti`（現有） | `dfleoyang-HLHS/holland`（新建） |
 | 網址 | `https://dfleoyang-hlhs.github.io/mbti/` | `https://dfleoyang-hlhs.github.io/holland/` |
 | 整合報告 | 結果頁提供連結 | **子網頁** `…/holland/combined.html` |
 
@@ -274,7 +276,7 @@ holland/
 | 7. 試測與修正 | 招募 30～50 位成人試測，部分受試者間隔 2～4 週重測 | 試測報告、修訂題目 |
 | 8. 正式上線 | 補齊說明文件 | Holland 網站 v1.0 |
 
-每個階段完成後都先請你確認，再進入下一階段。第 5 階段建立新 repo 前，會先和你確認 repo 名稱。
+每個階段完成後都先請你確認，再進入下一階段。
 
 ---
 
@@ -310,7 +312,7 @@ holland/
 - [x] 平台方案：**B 兩個獨立網站**
 - [x] 題目來源：**參考學術界公開題目**（經授權查證與中文化）
 - [x] 整合報告：**第一版即提供**，做成 Holland 網站的子網頁
-- [ ] 新 repo 名稱與網址（暫定 `holland` → `https://dfleoyang-hlhs.github.io/holland/`）
-- [ ] Holland 網站名稱（暫定「Holland 職業興趣探索」）
+- [x] 新 repo 名稱與網址：**`holland`** → `https://dfleoyang-hlhs.github.io/holland/`
+- [x] 網站名稱：**Holland 職業興趣探索**
 - [ ] 題庫版本：48 題（公開 RIASEC 標記量表）或 60 題（O*NET 短版），待第 2 階段查證後決定
 - [ ] 專家審閱人選（生涯諮商或心理專業人員）
