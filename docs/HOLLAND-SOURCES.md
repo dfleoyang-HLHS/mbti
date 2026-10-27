@@ -15,7 +15,7 @@
 | Armstrong, Allison & Rounds（2008）公開 RIASEC 標記量表 | 依文獻為 48 題（未能核對） | 未能核對 | 未能核對 | ⚠️ 無法查證 |
 | IPIP：Oregon Vocational Interest Scales（ORVIS） | 8 個興趣量表，非 RIASEC 六型 | 公有領域 | **可以**，不需申請許可 | ✅ 已查證（僅授權部分） |
 
-**建議採用 O\*NET Interest Profiler 短版**，理由見第五節。
+**決定：採用 O\*NET Interest Profiler 短版，並遵守 O\*NET Tools Developer License 的三項義務**（2026-10-27 定案）。理由見第五節。
 
 ---
 
@@ -151,8 +151,12 @@ O\*NET Career Exploration Tools（含 Interest Profiler）提供兩種授權（�
 
 ---
 
-## 六、待你決定
+## 六、決定紀錄
 
-1. 是否採用 O\*NET Interest Profiler 短版（建議），並接受「先完成效度驗證研究才正式推出」的時程調整？
-2. 是否需要評估 Armstrong 等人（2008）的量表？需要的話，請提供論文 PDF。
-3. 效度驗證研究需要具心理計量背景的專業人員參與。是否已有合作人選？
+| 日期 | 決定 |
+|---|---|
+| 2026-10-27 | 採用 O\*NET Interest Profiler 短版（60 題），依 O\*NET Tools Developer License 翻譯使用 |
+| 2026-10-27 | 遵守三項義務：正式推出前完成效度驗證研究、醒目標示改作聲明、提供「modifications and disclaimers」修改說明連結 |
+| 2026-10-27 | 不再評估 Armstrong 等人（2008）與 ORVIS |
+
+待定：效度驗證研究的心理計量專業人員人選。
