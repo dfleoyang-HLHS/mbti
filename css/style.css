@@ -480,3 +480,31 @@ body[data-stage] { transition: background-color 0.3s ease; }
 @media (max-width: 360px) {
   .fact strong { font-size: 1.1rem; }
 }
+
+/* 網站切換導覽列（16型性格探索／職業興趣探索），樣式與 Holland 網站一致 */
+.site-nav {
+  display: flex;
+  gap: 6px;
+  margin: -8px 0 14px;
+  font-size: 0.9rem;
+}
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.site-nav a[aria-current="page"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-nav a:not([aria-current]):hover { border-color: var(--accent); color: var(--accent); }
+}
