@@ -169,6 +169,7 @@
     }
     const raw = MBTI.rawScores(data, answers);
     MBTI.progress.clear();
+    MBTI.markCompleted(raw);
     location.href = 'result.html?' + MBTI.encodeRaw(raw);
   }
 

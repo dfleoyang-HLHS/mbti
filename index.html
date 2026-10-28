@@ -11,7 +11,7 @@
     // 套用使用者選擇的深色／淺色模式（放在樣式表前，避免畫面閃爍）
     try { const t = localStorage.getItem('mbti-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <link rel="stylesheet" href="css/style.css?v=20261028-1">
+  <link rel="stylesheet" href="css/style.css?v=20261028-2">
 </head>
 <body>
   <main class="container">
@@ -128,7 +128,7 @@
         <li>不需要想太久，第一直覺通常最準確。</li>
         <li>可以隨時修改答案或回到上一階段；作答進度只暫存在你的瀏覽器中。</li>
       </ul>
-      <p class="notice"><strong>隱私說明：</strong>本網站在你的瀏覽器中計分，不蒐集、不傳送任何作答資料或個人資料。</p>
+      <p class="notice"><strong>隱私說明：</strong>本網站在你的瀏覽器中計分，不蒐集、不傳送任何作答資料或個人資料。完成測驗後，網站只會在你的瀏覽器記下「已完成」與「最近一次結果」，用來顯示職業興趣探索的入口及產生整合報告；清除瀏覽器資料即可刪除。</p>
     </section>
 
     <footer class="site-footer">
@@ -137,7 +137,7 @@
     </footer>
   </main>
 
-  <script src="js/common.js?v=20261028-1"></script>
+  <script src="js/common.js?v=20261028-2"></script>
   <script>
     (() => {
       const saved = MBTI.progress.load();
