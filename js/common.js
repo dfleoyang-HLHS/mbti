@@ -217,5 +217,24 @@ const MBTI = (() => {
 
   initThemeToggle();
 
+  // 網站切換導覽列：Holland 職業興趣探索仍在效度驗證中（O*NET 授權規定推出前不得公開推廣），
+  // 因此只對曾開啟過 Holland 網站的研究參與者顯示。正式推出後，改為一律顯示即可。
+  function initSiteNav() {
+    let visited = false;
+    try {
+      visited = localStorage.getItem('holland-visited') === '1';
+    } catch (e) {
+      /* 無法讀取時不顯示 */
+    }
+    const header = document.querySelector('.site-header');
+    if (!visited || !header) return;
+    header.before(el('nav', { class: 'site-nav no-print', 'aria-label': '網站切換' }, [
+      el('a', { href: 'index.html', 'aria-current': 'page', text: '16型性格探索' }),
+      el('a', { href: '../holland/', text: '職業興趣探索' }),
+    ]));
+  }
+
+  initSiteNav();
+
   return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor, inAppNotice };
 })();
