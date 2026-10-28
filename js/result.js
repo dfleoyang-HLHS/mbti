@@ -23,6 +23,13 @@
   }
 
   const result = MBTI.analyze(raw, questionsData);
+  // 已完成 Holland 測驗時，可直接查看整合報告
+  let hollandResult = null;
+  try {
+    hollandResult = localStorage.getItem('holland-last-result');
+  } catch (e) {
+    /* 忽略 */
+  }
   const type = typesData.types.find((t) => t.code === result.code);
   const common = typesData.common;
   const query = MBTI.encodeRaw(raw);
@@ -59,7 +66,12 @@
           el('h2', { text: '下一步：探索你的職業興趣' }),
           el('p', { text: '16 型說明你「習慣怎麼做事」；Holland 職業興趣探索說明你「喜歡做什麼」。兩者搭配，可以更完整地思考職涯方向。' }),
           el('p', { class: 'notice small', text: 'Holland 職業興趣探索目前為研究用版本：中文題目仍在進行效度驗證研究，結果僅供參考。' }),
-          el('div', { class: 'btn-row center' }, [el('a', { class: 'btn btn-outline', href: '../holland/', text: '前往 Holland 職業興趣探索' })]),
+          el('div', { class: 'btn-row center' }, [
+            hollandResult
+              ? el('a', { class: 'btn', href: `../holland/combined.html?m=${raw.join(',')}&h=${hollandResult}`, text: '查看整合報告' })
+              : null,
+            el('a', { class: 'btn btn-outline', href: '../holland/', text: hollandResult ? '前往 Holland 職業興趣探索' : '開始 Holland 職業興趣探索' }),
+          ]),
         ])
       : null,
     el('div', { class: 'btn-row center' }, [el('a', { class: 'btn-text', href: 'quiz.html?new=1', text: '重新測驗' })]),
