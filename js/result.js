@@ -31,7 +31,7 @@
   const dimsBox = el('div');
   MBTI.renderDimensions(dimsBox, result, typesData, false);
 
-  app.replaceChildren(
+  app.replaceChildren(...[
     el('section', { class: 'card type-hero' }, [
       el('div', { class: 'type-label', text: '你的類型代碼' }),
       el('div', { class: 'type-code', text: result.code }),
@@ -54,7 +54,15 @@
       MBTI.inAppNotice(),
       el('p', { class: 'small muted', style: 'margin-top:12px' }, '小提醒：把這個頁面加入書籤，日後即可再次查看你的結果。'),
     ]),
+    MBTI.showHollandEntry()
+      ? el('section', { class: 'card center' }, [
+          el('h2', { text: '下一步：探索你的職業興趣' }),
+          el('p', { text: '16 型說明你「習慣怎麼做事」；Holland 職業興趣探索說明你「喜歡做什麼」。兩者搭配，可以更完整地思考職涯方向。' }),
+          el('p', { class: 'notice small', text: 'Holland 職業興趣探索目前為研究用版本：中文題目仍在進行效度驗證研究，結果僅供參考。' }),
+          el('div', { class: 'btn-row center' }, [el('a', { class: 'btn btn-outline', href: '../holland/', text: '前往 Holland 職業興趣探索' })]),
+        ])
+      : null,
     el('div', { class: 'btn-row center' }, [el('a', { class: 'btn-text', href: 'quiz.html?new=1', text: '重新測驗' })]),
-    el('footer', { class: 'site-footer' }, [el('p', { text: common.disclaimer })])
-  );
+    el('footer', { class: 'site-footer' }, [el('p', { text: common.disclaimer })]),
+  ].filter(Boolean));
 })();

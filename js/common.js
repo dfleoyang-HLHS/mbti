@@ -217,17 +217,31 @@ const MBTI = (() => {
 
   initThemeToggle();
 
-  // 網站切換導覽列：Holland 職業興趣探索仍在效度驗證中（O*NET 授權規定推出前不得公開推廣），
-  // 因此只對曾開啟過 Holland 網站的研究參與者顯示。正式推出後，改為一律顯示即可。
-  function initSiteNav() {
-    let visited = false;
+  // 完成測驗時記下「已完成」與最近一次結果（只存在使用者自己的瀏覽器），
+  // 用於顯示 Holland 職業興趣探索的入口與產生整合報告
+  function markCompleted(raw) {
     try {
-      visited = localStorage.getItem('holland-visited') === '1';
+      localStorage.setItem('mbti-completed', '1');
+      localStorage.setItem('mbti-last-result', raw.join(','));
     } catch (e) {
-      /* 無法讀取時不顯示 */
+      /* 忽略 */
     }
+  }
+
+  // Holland 職業興趣探索仍在效度驗證中（O*NET 授權規定推出前不得公開推廣），
+  // 因此只對完成過本測驗、或曾開啟過 Holland 網站的人顯示入口。正式推出後，改為一律回傳 true 即可。
+  function showHollandEntry() {
+    try {
+      return localStorage.getItem('mbti-completed') === '1' || localStorage.getItem('holland-visited') === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // 網站切換導覽列
+  function initSiteNav() {
     const header = document.querySelector('.site-header');
-    if (!visited || !header) return;
+    if (!showHollandEntry() || !header) return;
     header.before(el('nav', { class: 'site-nav no-print', 'aria-label': '網站切換' }, [
       el('a', { href: 'index.html', 'aria-current': 'page', text: '16型性格探索' }),
       el('a', { href: '../holland/', text: '職業興趣探索' }),
@@ -236,5 +250,5 @@ const MBTI = (() => {
 
   initSiteNav();
 
-  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor, inAppNotice };
+  return { loadJSON, rawScores, analyze, encodeRaw, parseRaw, progress, el, list, renderDimensions, showError, syncThemeColor, inAppNotice, markCompleted, showHollandEntry };
 })();
